@@ -1,0 +1,13 @@
+# Build artifacts
+obj/
+bin/
+
+# Compiled object files
+*.o
+*.obj
+
+# Executables
+run_tests
+
+# Debug
+*.dSYM/

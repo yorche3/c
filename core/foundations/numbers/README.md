@@ -9,7 +9,7 @@ Tres enfoques de implementación para los mismos 5 algoritmos: **recursivo direc
 
 ---
 
-## 📂 Archivos / Files
+## 📂 Archivos y estructura / Files & Structure
 
 ### Raíz del proyecto / Project root
 
@@ -19,7 +19,6 @@ Tres enfoques de implementación para los mismos 5 algoritmos: **recursivo direc
 | [`src/numbers.c`](src/numbers.c) | Implementación — 15 funciones más 4 helpers internos (`static`). |
 | [`Makefile`](Makefile) | Automatización de compilación y tests. |
 | [`.gitignore`](.gitignore) | Ignora `obj/`, `bin/` y archivos objeto. |
-| [`README.md`](README.md) | Este archivo. |
 
 ### Pruebas / Tests (`test/`)
 
@@ -28,19 +27,27 @@ Tres enfoques de implementación para los mismos 5 algoritmos: **recursivo direc
 | `test/numbers_rec_test.c` | 5 tests para el enfoque recursivo directo |
 | `test/numbers_ite_test.c` | 5 tests para el enfoque iterativo |
 
-> **ES:** No hay tests separados para el enfoque con acumulador porque:
-> 1. C no tiene TCO — el consumo de pila es el mismo que la recursión directa.
-> 2. Las funciones `Acc` se prueban **implícitamente** al ser llamadas desde las funciones públicas (ej: `factorial_acc(5)` llama al helper `factorial_acc_help`).
-> 3. Los helpers (`_help`) son `static` y no están declarados en el header — son detalles internos de implementación.
->
-> **EN:** There are no separate tests for the accumulator approach because:
-> 1. C lacks TCO — stack usage is the same as direct recursion.
-> 2. `Acc` functions are **implicitly tested** when called from public functions (e.g., `factorial_acc(5)` calls the helper `factorial_acc_help`).
-> 3. Helpers (`_help`) are `static` and not declared in the header — they are internal implementation details.
+**Estructura de directorios esperada:**
+
+```text
+numbers/
+├── include/
+│   └── numbers.h                # Header — 15 funciones públicas
+├── src/
+│   └── numbers.c                # Implementación — 15 funciones + 4 helpers static
+├── test/
+│   ├── numbers_rec_test.c       # Tests recursivos (5)
+│   └── numbers_ite_test.c       # Tests iterativos (5)
+├── Makefile                     # Automatización de compilación
+├── .gitignore                   # Ignora obj/, bin/
+├── obj/                         # Objetos compilados (generado)
+├── bin/                         # Ejecutable de tests (generado)
+└── README.md                    # Este archivo
+```
 
 ---
 
-## 🏗️ Enfoque / Approach
+## 🛠️ Enfoque y construcción / Approach & Build
 
 **ES:** Sigue el mismo patrón que [`calculator`](../unit_test/calculator/): un header público, una implementación y tests en `test/` descubiertos automáticamente por Criterion.
 
@@ -64,7 +71,7 @@ The 15 functions are organized into 3 groups by approach:
 
 ---
 
-## 📄 Archivos clave / Key Files
+## 📄 Archivos de configuración clave / Key Configuration Files
 
 ### `include/numbers.h` — Header público
 
@@ -197,7 +204,7 @@ Test(numbers_ite, fibonacci_iter) {
 
 ---
 
-## 🚀 Compilar y ejecutar / Build & Run
+## 🚀 Compilación y ejecución / Build & Run
 
 ### Requisito: Tener GCC, make y Criterion instalados
 
@@ -224,27 +231,9 @@ make clean   # Limpia obj/ y bin/
 
 ---
 
-## 📁 Estructura / Structure
-
-```text
-numbers/
-├── include/
-│   └── numbers.h                # Header — 15 funciones públicas
-├── src/
-│   └── numbers.c                # Implementación — 15 funciones + 4 helpers static
-├── test/
-│   ├── numbers_rec_test.c       # Tests recursivos (5)
-│   └── numbers_ite_test.c       # Tests iterativos (5)
-├── Makefile                     # Automatización de compilación
-├── .gitignore                   # Ignora obj/, bin/
-├── obj/                         # Objetos compilados (generado)
-├── bin/                         # Ejecutable de tests (generado)
-└── README.md                    # Este archivo
-```
-
 ---
 
-## 🧪 Algoritmos / Algorithms
+## 🧠 Algoritmos / operaciones (según el módulo)
 
 ### 3 enfoques × 5 algoritmos = 15 funciones / 10 tests
 
@@ -261,20 +250,38 @@ numbers/
 
 ---
 
-### 🌐 Otras implementaciones / Other implementations
+## 📝 Notas de implementación / Implementation Notes
 
-Este proyecto también está implementado en otros lenguajes. Explora el [repositorio principal](https://github.com/yorche3/programming_languages) para ver todas las versiones.
+### 🔁 Sobre recursión con acumulador y Tail Call Optimization (TCO) / On recursion with accumulator and Tail Call Optimization (TCO)
+
+**ES:**
+
+Tail recursion ocurre cuando la llamada recursiva es la última acción que ejecuta una función/método; después de la llamada no hay más instrucciones, la función devuelve el resultado de la llamada recursiva. La recursión con acumulador consigue esto pasando el estado previo como parámetro a cada llamada, sin dejar trabajo pendiente en la pila.
+
+**C no garantiza TCO.** El compilador GCC puede aplicar TCO con niveles de optimización `-O2` o superiores, pero el estándar C no lo exige. Por lo tanto, las funciones con acumulador (`_acc`) consumen la misma pila que las recursivas directas.
+
+La implementación con acumulador se conserva únicamente con fines educativos: sirve como puente conceptual entre la recursión directa (más cercana a la definición matemática) y la versión iterativa (más eficiente). Como en este contexto no hay un beneficio práctico de rendimiento garantizado, no se desarrollan pruebas unitarias específicas para los métodos con acumulador. La validación del comportamiento se cubre a través de las pruebas de los enfoques recursivo e iterativo, que juntos ejercitan los mismos resultados.
+
+**EN:**
+
+Tail recursion occurs when the recursive call is the last action that runs a function/method; after the call there are no more instructions, the function returns the result of the recursive call. Recursion with accumulator achieves this by passing the previous state as a parameter to each call, without leaving any pending work on the stack.
+
+**C does not guarantee TCO.** The GCC compiler may apply TCO with optimization levels like `-O2` or higher, but the C standard does not require it. Therefore, accumulator functions (`_acc`) consume the same stack as direct recursion.
+
+The accumulator implementation is preserved only for educational purposes: it serves as a conceptual bridge between the direct recursive (closer to mathematical definition) and the iterative version (more efficient). Since there is no guaranteed practical performance benefit in this context, no specific unit tests are developed for the recursive methods with accumulator. The behavior validation is covered through the tests of recursive and iterative approaches, which together exercise the same results.
 
 ---
 
-## 📝 Notas / Notes
-
-- **ES:** C no tiene TCO (Tail Call Optimization), por lo que las funciones con acumulador (`_acc`) consumen la misma pila que las recursivas directas. Se incluyen por coherencia educativa con las implementaciones en otros lenguajes del repositorio.
-- **EN:** C lacks TCO (Tail Call Optimization), so accumulator-based functions (`_acc`) consume the same stack as direct recursion. They are included for educational consistency with implementations in other languages in the repository.
 - **ES:** Los helpers `_help` son funciones `static` no declaradas en el header. Esta es una práctica común en C para encapsular lógica auxiliar: se mantienen en el `.c` y no forman parte de la API pública.
 - **EN:** The `_help` helpers are `static` functions not declared in the header. This is a common C practice to encapsulate auxiliary logic: they stay in the `.c` and are not part of the public API.
 - **ES:** C99 no permite declaraciones `int i = 0` dentro del `for` si se compila con `-std=c99` estricto. El código usa esta característica porque GCC la soporta incluso en C99 (es una extensión aceptada).
 - **EN:** C99 does not allow `int i = 0` declarations inside `for` if compiled with strict `-std=c99`. The code uses this feature because GCC supports it even in C99 (it's an accepted extension).
+
+---
+
+### 🌐 Otras implementaciones / Other implementations
+
+Este proyecto también está implementado en otros lenguajes. Explora el [repositorio principal](https://github.com/yorche3/programming_languages) para ver todas las versiones.
 
 ---
 

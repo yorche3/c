@@ -4,7 +4,7 @@ Implementación de la especificación [03_Unit_Test_Calculator](https://yorche3.
 
 ---
 
-## 📂 Archivos / Files
+## 📂 Archivos y estructura / Files & Structure
 
 ### Raíz del proyecto / Project root
 
@@ -14,7 +14,6 @@ Implementación de la especificación [03_Unit_Test_Calculator](https://yorche3.
 | [`src/calculator.c`](src/calculator.c) | Implementación — suma repetitiva para multiplicación, resta repetitiva para división. |
 | [`Makefile`](Makefile) | Automatización de compilación y tests (`make`, `make test`, `make clean`). |
 | [`.gitignore`](.gitignore) | Ignora `obj/`, `bin/` y archivos objeto. |
-| [`README.md`](README.md) | Este archivo. |
 
 ### Pruebas / Tests (`test/`)
 
@@ -22,12 +21,26 @@ Implementación de la especificación [03_Unit_Test_Calculator](https://yorche3.
 |---------|-----------|
 | `test/calculator_test.c` | Pruebas unitarias — 5 grupos con 3 aserciones cada uno, usando el macro `Test()` de Criterion. |
 
-> **ES:** Criterion genera su propio `main()` automáticamente, por lo que no se necesita un archivo `run_tests.c`.
-> **EN:** Criterion generates its own `main()` automatically, so no `run_tests.c` file is needed.
+**Estructura de directorios esperada:**
+
+```text
+calculator/
+├── include/
+│   └── calculator.h         # Header — prototipos de las funciones
+├── src/
+│   └── calculator.c         # Implementación — 5 operaciones aritméticas
+├── test/
+│   └── calculator_test.c    # Pruebas unitarias (5 grupos)
+├── Makefile                 # Automatización de compilación
+├── .gitignore               # Ignora obj/, bin/ y archivos objeto
+├── obj/                     # Objetos compilados (generado)
+├── bin/                     # Ejecutable de tests (generado)
+└── README.md                # Este archivo
+```
 
 ---
 
-## 🏗️ Enfoque / Approach
+## 🛠️ Enfoque y construcción / Approach & Build
 
 **ES:** Este proyecto usa el framework de pruebas **Criterion**, que:
 
@@ -45,7 +58,7 @@ Implementación de la especificación [03_Unit_Test_Calculator](https://yorche3.
 
 ---
 
-## 📄 Archivos clave / Key Files
+## 📄 Archivos de configuración clave / Key Configuration Files
 
 ### `include/calculator.h` — Header
 
@@ -176,7 +189,7 @@ clean:
 
 ---
 
-## 🚀 Compilar y ejecutar / Build & Run
+## 🚀 Compilación y ejecución / Build & Run
 
 ### Requisito: Tener GCC, make y Criterion instalados
 
@@ -206,26 +219,7 @@ make clean   # Limpia obj/ y bin/
 
 ---
 
-## 📁 Estructura / Structure
-
-```text
-calculator/
-├── include/
-│   └── calculator.h         # Header — prototipos de las funciones
-├── src/
-│   └── calculator.c         # Implementación — 5 operaciones aritméticas
-├── test/
-│   └── calculator_test.c    # Pruebas unitarias (5 grupos)
-├── Makefile                 # Automatización de compilación
-├── .gitignore               # Ignora obj/, bin/ y archivos objeto
-├── obj/                     # Objetos compilados (generado)
-├── bin/                     # Ejecutable de tests (generado)
-└── README.md                # Este archivo
-```
-
----
-
-## 🧪 Operaciones / Operations
+## 🧠 Algoritmos / operaciones (según el módulo)
 
 | Función | Implementación | Cumple |
 |---------|---------------|--------|
@@ -237,18 +231,18 @@ calculator/
 
 ---
 
-### 🌐 Otras implementaciones / Other implementations
-
-Este proyecto también está implementado en otros lenguajes. Explora el [repositorio principal](https://github.com/yorche3/programming_languages) para ver todas las versiones.
-
----
-
-## 📝 Notas / Notes
+## 📝 Notas de implementación / Implementation Notes
 
 - **ES:** Criterion descubre automáticamente los tests definidos con el macro `Test()`. No es necesario registrarlos manualmente.
 - **EN:** Criterion automatically discovers tests defined with the `Test()` macro. No manual registration is needed.
 - **ES:** Las funciones `multiplication` y `division` están implementadas con sumas/restas repetitivas para cumplir la especificación educativa (no usar operadores `*` ni `/` directos).
 - **EN:** The `multiplication` and `division` functions are implemented with repeated addition/subtraction to comply with the educational specification (no direct `*` or `/` operators).
+
+---
+
+### 🌐 Otras implementaciones / Other implementations
+
+Este proyecto también está implementado en otros lenguajes. Explora el [repositorio principal](https://github.com/yorche3/programming_languages) para ver todas las versiones.
 
 ---
 

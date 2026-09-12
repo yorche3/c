@@ -4,17 +4,26 @@ Implementación de la especificación [01_Hello_World](https://yorche3.github.io
 
 ---
 
-## 📂 Archivos / Files
+## 📂 Archivos y estructura / Files & Structure
 
 | Archivo | Propósito |
 |---------|-----------|
 | [`hello_world.c`](hello_world.c) | Código fuente: imprime `"Hello, World! from C!"` en la consola. |
 | [`Makefile`](Makefile) | Automatización de compilación (`make`, `make run`, `make clean`). |
-| [`README.md`](README.md) | Este archivo. |
+
+**Estructura de directorios esperada:**
+
+```text
+helloworld/
+├── hello_world.c    # Código fuente
+├── Makefile         # Automatización de compilación
+├── README.md        # Este archivo
+└── hello_world      # Ejecutable (generado)
+```
 
 ---
 
-## 🛠️ Enfoque / Approach
+## 🛠️ Enfoque y construcción / Approach & Build
 
 **ES:** Este proyecto usa **C99** con **GCC** y sigue un enfoque minimalista: un único archivo fuente, sin dependencias externas, compilado directamente con `gcc`.
 
@@ -34,7 +43,7 @@ Features:
 
 ---
 
-## 📄 Archivos clave / Key Files
+## 📄 Archivos de configuración clave / Key Configuration Files
 
 ### `hello_world.c`
 
@@ -93,7 +102,7 @@ clean:
 
 ---
 
-## 🚀 Compilar y ejecutar / Build & Run
+## 🚀 Compilación y ejecución / Build & Run
 
 ### Requisito: Tener GCC y make instalados
 
@@ -130,15 +139,14 @@ gcc -Wall -Wextra -std=c99 -o hello_world hello_world.c
 
 ---
 
-## 📁 Estructura / Structure
+---
 
-```text
-helloworld/
-├── hello_world.c    # Código fuente
-├── Makefile         # Automatización de compilación
-├── README.md        # Este archivo
-└── hello_world      # Ejecutable (generado)
-```
+## 📝 Notas de implementación / Implementation Notes
+
+- **ES:** C99 con GCC y Makefile minimalista. Sin dependencias externas.
+- **EN:** C99 with GCC and minimalist Makefile. No external dependencies.
+- **ES:** Se usa `-Wall -Wextra -std=c99` para warnings exhaustivos y portabilidad.
+- **EN:** Uses `-Wall -Wextra -std=c99` for exhaustive warnings and portability.
 
 ---
 

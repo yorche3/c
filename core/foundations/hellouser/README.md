@@ -6,17 +6,26 @@ Lee un nombre desde la entrada estándar y saluda al usuario.
 
 ---
 
-## 📂 Archivos / Files
+## 📂 Archivos y estructura / Files & Structure
 
 | Archivo | Propósito |
 |---------|-----------|
 | [`hello_user.c`](hello_user.c) | Código fuente: solicita un nombre al usuario y saluda. |
 | [`Makefile`](Makefile) | Automatización de compilación (`make`, `make run`, `make clean`). |
-| [`README.md`](README.md) | Este archivo. |
+
+**Estructura de directorios esperada:**
+
+```text
+hellouser/
+├── hello_user.c    # Código fuente
+├── Makefile        # Automatización de compilación
+├── README.md       # Este archivo
+└── hello_user      # Ejecutable (generado)
+```
 
 ---
 
-## 🛠️ Enfoque / Approach
+## 🛠️ Enfoque y construcción / Approach & Build
 
 **ES:** Este programa introduce dos conceptos nuevos respecto a `hello_world`:
 
@@ -30,7 +39,7 @@ Lee un nombre desde la entrada estándar y saluda al usuario.
 
 ---
 
-## 📄 Archivos clave / Key Files
+## 📄 Archivos de configuración clave / Key Configuration Files
 
 ### `hello_user.c`
 
@@ -100,7 +109,7 @@ int main()
 
 ---
 
-## 🚀 Compilar y ejecutar / Build & Run
+## 🚀 Compilación y ejecución / Build & Run
 
 ### Requisito: Tener GCC y make instalados
 
@@ -137,15 +146,14 @@ gcc -Wall -Wextra -std=c99 -o hello_user hello_user.c
 
 ---
 
-## 📁 Estructura / Structure
+---
 
-```text
-hellouser/
-├── hello_user.c    # Código fuente
-├── Makefile        # Automatización de compilación
-├── README.md       # Este archivo
-└── hello_user      # Ejecutable (generado)
-```
+## 📝 Notas de implementación / Implementation Notes
+
+- **ES:** Se usa `fgets` en lugar de `scanf` para evitar desbordamiento de buffer y problemas con espacios.
+- **EN:** `fgets` is used instead of `scanf` to avoid buffer overflow and issues with spaces.
+- **ES:** El buffer `name[100]` es de tamaño fijo; si el nombre excede 99 caracteres, se trunca.
+- **EN:** The `name[100]` buffer is fixed-size; if the name exceeds 99 characters, it gets truncated.
 
 ---
 

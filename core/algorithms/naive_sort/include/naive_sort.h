@@ -3,7 +3,6 @@
 
 #include <stddef.h>
 
-
 int *selection_sort(int *arr, size_t n);
 int *bubble_sort(int *arr, size_t n);
 int *insertion_sort(int *arr, size_t n);

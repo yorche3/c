@@ -35,6 +35,12 @@ void linked_list_init(LinkedList *list);
 bool linked_list_is_empty(const LinkedList *list);
 size_t linked_list_size(const LinkedList *list);
 int linked_list_get_head(const LinkedList *list);
+/*
+ * Nodo cabeza de la lista, para recorrerla con `node_get_value` y `node_get_next`.
+ * Devuelve NULL si la lista está vacía. La especificación pide que el recorrido se
+ * observe con operaciones del contrato, sin leer los campos de `LinkedList`.
+ */
+Node *linked_list_get_head_node(const LinkedList *list);
 void linked_list_insert_head(LinkedList *list, int value);
 void linked_list_insert_tail(LinkedList *list, int value);
 int linked_list_delete(LinkedList *list, int value);

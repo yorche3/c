@@ -61,6 +61,7 @@ void node_set_next(Node *node, Node *next) {
 void linked_list_init(LinkedList *list) {
   if (list != NULL) {
     list->head = NULL;
+    list->tail = NULL;
     list->count = 0;
   }
 }
@@ -115,6 +116,9 @@ void linked_list_insert_head(LinkedList *list, int value) {
       new_node->value = value;
       new_node->next = list->head;
       list->head = new_node;
+      if (list->tail == NULL) {
+        list->tail = new_node;
+      }
       list->count++;
     }
   }
@@ -128,12 +132,10 @@ void linked_list_insert_tail(LinkedList *list, int value) {
       new_node->next = NULL;
       if (list->head == NULL) {
         list->head = new_node;
+        list->tail = new_node;
       } else {
-        Node *current = list->head;
-        while (current->next != NULL) {
-          current = current->next;
-        }
-        current->next = new_node;
+        list->tail->next = new_node;
+        list->tail = new_node;
       }
       list->count++;
     }

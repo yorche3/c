@@ -1,4 +1,5 @@
 #include "data_structures_advanced.h"
+#include <stdlib.h>
 
 #define SUCCESS_VALUE 0
 #define FAILURE_VALUE (-1)
@@ -51,6 +52,9 @@ void binary_tree_init(BinaryTree *tree) {
 int binary_tree_insert(BinaryTree *tree, int value) {
     TreeNode *root = tree->root;
     TreeNode *new_node = (TreeNode *)malloc(sizeof(TreeNode));
+    if (new_node == NULL) {
+        return FAILURE_VALUE;
+    }
     if (root == NULL) {
         tree_node_init(new_node, value);
         tree->root = new_node;
@@ -83,8 +87,6 @@ int binary_tree_insert(BinaryTree *tree, int value) {
             current = current->right;
         }
     }
-    free(new_node); // Avoid memory leak if somehow the loop exits without inserting
-    return FAILURE_VALUE;
 }
 
 bool binary_tree_contains(const BinaryTree *tree, int value) {
@@ -109,23 +111,17 @@ size_t binary_tree_size(const BinaryTree *tree) {
     return tree->count;
 }
 
-void binary_tree_free(BinaryTree *tree) {
-    if (tree->root != NULL) {
-        // Free all nodes in the tree
-        TreeNode *current = tree->root;
-        TreeNode *stack[tree->count];
-        int top = -1;
-        while (current != NULL || top != -1) {
-            while (current != NULL) {
-                stack[++top] = current;
-                current = current->left;
-            }
-            current = stack[top--];
-            TreeNode *right = current->right;
-            free(current);
-            current = right;
-        }
+static void free_tree_nodes(TreeNode *node) {
+    if (node == NULL) {
+        return;
     }
+    free_tree_nodes(node->left);
+    free_tree_nodes(node->right);
+    free(node);
+}
+
+void binary_tree_free(BinaryTree *tree) {
+    free_tree_nodes(tree->root);
     tree->root = NULL;
     tree->count = 0;
 }
@@ -158,6 +154,9 @@ int graph_add_vertex(Graph *graph, int label) {
         return SUCCESS_VALUE; // Vertex already exists
     }
     GraphNode *new_node = (GraphNode *)malloc(sizeof(GraphNode));
+    if (new_node == NULL) {
+        return FAILURE_VALUE;
+    }
     graph_node_init(new_node, label);
     new_node->next_vertex = graph->vertices;
     graph->vertices = new_node;
@@ -172,22 +171,22 @@ int graph_add_edge(Graph *graph, int u, int v) {
         return FAILURE_VALUE;
     }
     NeighborNode *previous = NULL;
-    NeighborNode *current = source->neighbours;
-    while (current != NULL) {
-        if (current->label == v) {
-            return FAILURE_VALUE; // Edge already exists
-        }
-        previous = current;
-        current = current->next;
+    NeighborNode **current = &source->neighbours;
+    while (*current != NULL && (*current)->label < v) {
+        previous = *current;
+        current = &(*current)->next;
     }
-    NeighborNode *new_neighbor = (NeighborNode *)malloc(sizeof(NeighborNode));
+    if (*current != NULL && (*current)->label == v) {
+        return SUCCESS_VALUE; // Edge already exists
+    }
+    NeighborNode *new_neighbor = malloc(sizeof(*new_neighbor));
     if (new_neighbor == NULL) {
         return FAILURE_VALUE;
     }
     new_neighbor->label = v;
-    new_neighbor->next = NULL;
+    new_neighbor->next = *current;
     if (previous == NULL) {
-        source->neighbours = new_neighbor;
+        *current = new_neighbor;
     } else {
         previous->next = new_neighbor;
     }
@@ -227,10 +226,11 @@ int graph_get_neighbors(const Graph *graph, int u, int **neighbors, size_t *coun
         *count = 0;
         return SUCCESS_VALUE;
     }
-    *neighbors = (int *)malloc(neighbor_count * sizeof(int));
-    if (*neighbors == NULL) {
+    int *buf = malloc(neighbor_count * sizeof *buf);
+    if (buf == NULL) {
         return FAILURE_VALUE;
     }
+    *neighbors = buf;
     current = source->neighbours;
     for (size_t i = 0; i < neighbor_count; i++) {
         (*neighbors)[i] = current->label;
@@ -253,17 +253,19 @@ size_t graph_edge_count(const Graph *graph) {
 }
 
 void graph_free(Graph *graph) {
-    GraphNode *current = graph->vertices;
-    while (current != NULL) {
-        NeighborNode *neighbor = current->neighbours;
+    GraphNode *vertex = graph->vertices;
+    while (vertex != NULL) {
+        GraphNode *next_vertex = vertex->next_vertex;
+        NeighborNode *neighbor = vertex->neighbours;
         while (neighbor != NULL) {
-            NeighborNode *temp_neighbor = neighbor;
-            neighbor = neighbor->next;
-            free(temp_neighbor);
+            NeighborNode *next_neighbor = neighbor->next;
+            free(neighbor);
+            neighbor = next_neighbor;
         }
-        GraphNode *temp_node = current;
-        current = current->next;
-        free(temp_node);
+        free(vertex);
+        vertex = next_vertex;
     }
-    free(graph);
+    graph->vertices = NULL;
+    graph->vertex_total = 0;
+    graph->edges = 0;
 }

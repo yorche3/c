@@ -17,13 +17,22 @@ algorithms/
 │   │   └── naive_sort_test.c
 │   ├── Makefile
 │   └── README.md
-└── data_structures_basics/   # 06_Data_Structures_Basics
+├── data_structures_basics/   # 06_Data_Structures_Basics
+│   ├── include/
+│   │   └── data_structures_basics.h
+│   ├── src/
+│   │   └── data_structures_basics.c
+│   ├── test/
+│   │   └── data_structures_basics_test.c
+│   ├── Makefile
+│   └── README.md
+└── data_structures_advanced/ # 07_Data_Structures_Advanced
     ├── include/
-    │   └── data_structures_basics.h
+    │   └── data_structures_advanced.h
     ├── src/
-    │   └── data_structures_basics.c
+    │   └── data_structures_advanced.c
     ├── test/
-    │   └── data_structures_basics_test.c
+    │   └── data_structures_advanced_test.c
     ├── Makefile
     └── README.md
 ```
@@ -36,13 +45,13 @@ algorithms/
 |--------|---------------|---------|-------|--------|
 | [`naive_sort/`](naive_sort/) | [05_Naive_Sort](https://yorche3.github.io/programming_languages/core/algorithms/05_Naive_Sort/) | `make test` (lib + Criterion) | 3 | ✅ |
 | [`data_structures_basics/`](data_structures_basics/) | [06_Data_Structures_Basics](https://yorche3.github.io/programming_languages/core/algorithms/06_Data_Structures_Basics/) | `make test` (lib + Criterion) | 4 | ✅ |
-| `data_structures_advanced` | [07_Data_Structures_Advanced](https://yorche3.github.io/programming_languages/core/algorithms/07_Data_Structures_Advanced/) | — | — | 📋 |
+| [`data_structures_advanced/`](data_structures_advanced/) | [07_Data_Structures_Advanced](https://yorche3.github.io/programming_languages/core/algorithms/07_Data_Structures_Advanced/) | `make test` (lib + Criterion) | 153 | ✅ |
 | `efficient_sort` | [08_Efficient_Sort](https://yorche3.github.io/programming_languages/core/algorithms/08_Efficient_Sort/) | — | — | 📋 |
 | `distributed_sort` | [09_Distributed_Sort](https://yorche3.github.io/programming_languages/core/algorithms/09_Distributed_Sort/) | — | — | 📋 |
 | `searching` | [10_Searching](https://yorche3.github.io/programming_languages/core/algorithms/10_Searching/) | — | — | 📋 |
 
-> **ES:** `naive_sort` y `data_structures_basics` son las dos primeras implementaciones homologadas de esta fase en C. Los módulos restantes siguen el orden de la numeración canónica `07_` a `10_`.
-> **EN:** `naive_sort` and `data_structures_basics` are the first two standardized implementations of this phase in C. The remaining modules follow the canonical numbering from `07_` to `10_`.
+> **ES:** `naive_sort`, `data_structures_basics` y `data_structures_advanced` son las tres primeras implementaciones homologadas de esta fase en C. Los módulos restantes siguen el orden de la numeración canónica `08_` a `10_`.
+> **EN:** `naive_sort`, `data_structures_basics`, and `data_structures_advanced` are the first three standardized implementations of this phase in C. The remaining modules follow the canonical numbering from `08_` to `10_`.
 
 ---
 
@@ -66,6 +75,9 @@ cd naive_sort && make test
 
 # Data Structures Basics
 cd data_structures_basics && make test
+
+# Data Structures Advanced
+cd data_structures_advanced && make test
 ```
 
 ---

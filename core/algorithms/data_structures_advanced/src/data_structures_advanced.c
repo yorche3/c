@@ -51,7 +51,7 @@ void binary_tree_init(BinaryTree *tree) {
 
 int binary_tree_insert(BinaryTree *tree, int value) {
     TreeNode *root = tree->root;
-    TreeNode *new_node = (TreeNode *)malloc(sizeof(TreeNode));
+    TreeNode *new_node = malloc(sizeof(TreeNode));
     if (new_node == NULL) {
         return FAILURE_VALUE;
     }
@@ -153,7 +153,7 @@ int graph_add_vertex(Graph *graph, int label) {
     if (graph_find_vertex(graph, label) != NULL) {
         return SUCCESS_VALUE; // Vertex already exists
     }
-    GraphNode *new_node = (GraphNode *)malloc(sizeof(GraphNode));
+    GraphNode *new_node = malloc(sizeof(GraphNode));
     if (new_node == NULL) {
         return FAILURE_VALUE;
     }
@@ -196,10 +196,8 @@ int graph_add_edge(Graph *graph, int u, int v) {
 
 bool graph_has_edge(const Graph *graph, int u, int v) {
     GraphNode *source = graph_find_vertex(graph, u);
-    GraphNode *target = graph_find_vertex(graph, v);
-    if (source == NULL || target == NULL) {
-        return false;
-    }
+    if (source == NULL) return false;
+    if (graph_find_vertex(graph, v) == NULL) return false;
     NeighborNode *current = source->neighbours;
     while (current != NULL && current->label < v) {
         current = current->next;
